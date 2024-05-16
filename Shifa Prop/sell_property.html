@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shifa Properties</title>
+  <link rel="icon" type="image/x-icon" href="./Images/logo.jpeg">
+  <link rel="stylesheet" href="./Style_sheets/styles.css">
+  <!-- <script>
+    document.getElementById("submit-btn").addEventListener("click", function() {
+        alert("Thanks For Contacting Shifa Properties! Your data is stored in our system. We will contact you soon.");
+    });
+</script> -->
+
+</head>
+<body>
+  <header>
+   <div class="main"> 
+   <img src="./Images/logo.jpeg"> <h1>Shifa Properties®</h1>
+  </div>
+    <nav>
+      <ul>
+        <li></i><a href="Home.html">Home</a></li>
+        <li><a href="Properties.html">Properties</a></li>
+        <li><a href="sell_property.html">Sell</a></li>
+        <li><a href="About Us.html">About Us</a></li>
+        <li><a href="contactus.html">Contact</a></li>
+        <li><a href="Signin.html">Sign In</a></li>
+      </ul>
+    </nav>
+  </header>
+<div class="sell-hero">
+  <h1>Upload Your Property Details Here. </h1>
+  <h4>Get the best value for your property in a few steps.</h4>
+
+</div>
+
+
+  <main>
+    <form action="#" method="post" class="property-form">
+      <div class="form-group">
+        <label for="Owner_Name">Owner Name:</label>
+        <input type="text" id="Owner_Name" name="Owner_Name"  placeholder="Name" required>
+    </div>
+    <div class="form-group">
+      <label for="Owner_email">Owner Email Address :</label>
+      <input type="text" id="Owner_email" name="Owner_email"  placeholder="abc@gmail.com" required>
+  </div>
+        <div class="form-group">
+            <label for="property-type">Property Type:</label>
+            <select id="property-type" name="property-type" required>
+                <option value="">Select</option>
+                <option value="house">House</option>
+                <option value="apartment">Apartment</option>
+                <option value="commercial">Commercial</option>
+                <option value="land">Land</option>
+            </select>
+        </div>
+        <div class="form-group">
+          <label for="property-area">Which city is your property in? :</label>
+          <select id="property-area" name="property-area" required>
+            <option value="">Select</option>
+            <option value="Lahore">Lahore</option>
+            <option value="Islamabad">Islamabad</option>
+            <option value="Karachi">Karachi</option>
+            <option value="Multan">Multan</option>
+            <option value="Quetta">Quetta</option>
+            <option value="Gujranwala">Gujranwala</option>
+        </select>      
+      </div>
+      <div class="form-group">
+        <label for="property-size">What is the size of your property? :</label>
+        <select id="property-size" name="property-size" required>
+          <option value="">Select</option>
+          <option value="2 Marla">2 Marla</option>
+          <option value="3 Marla">3 Marla</option>
+          <option value="5 Marla">5 Marla</option>
+          <option value="10 Marla">10 Marla</option>
+          <option value="1 Kanal">1 Kanal</option>
+          <option value="10 Kanal">10 Kanal</option>
+          
+      </select>      
+    </div>
+  
+      
+        <div class="form-group">
+            <label for="property-location"> what is the location of your property? :</label>
+            <input type="text" id="property-location" name="property-location" placeholder="Address, Block, Phase, City etc" required>
+        </div>
+
+        <div class="form-group">
+          <label for="property-price"> what is your asking Price? :</label>
+          <input type="text" id="property-price" name="property-price" placeholder="Price RS" required>
+      </div>
+      
+        <div class="form-group">
+            <label for="property-description">Description:</label>
+            <textarea id="property-description" name="property-description" rows="4" placeholder="Enter Your All Property Description in this such as (No of beds, Bathrooms, Dinnings etc).  " required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="property-condition">What is the Condition of your property? :</label>
+          <select id="property-condition" name="property-condition" required>
+            <option value="">Select The Condition</option>
+            <option value="Brand New">Brand New</option>
+            <option value="Excellent - in a good shape & well maintained">Excellent - in a good shape & well maintained</option>
+            <option value="Good - in a good shape need cosmetic updates">Good - in a good shape need cosmetic updates</option>
+            <option value="Need minor work - needs a few minor renovations">Need minor work - needs a few minor renovations</option>
+            <option value="Need major work - need major renovations inside and out">Need major work - need major renovations inside and out</option>
+            
+        </select>      
+      </div>
+    
+        <div class="form-group">
+          <label for="property-images">Upload Images:</label>
+          <input type="file" id="property-images" name="property-images" accept="image/*" multiple required>
+      </div>
+      
+      <button type="submit" id="submit-btn">Submit</button>
+
+      <script>
+          document.getElementById("submit-btn").addEventListener("click", function() {
+              alert("Thanks For Contacting Shifa Properties! Your data is stored in our system. We will contact you soon.");
+          });
+      </script>
+
+        </form>
+</main>
+
+
+
+<footer class="footer">
+  <div class="container-footer">
+      <div class="row"> 
+              <div class="footer-col">
+                <h4>Contact US</h4>
+                    <ul>
+                      <li>Dear Valued Customers for your Complaints & Suggestions Reach Us at Our <br>Following Contact Details</li>
+                      <li>Mobile Number : +92 321 9477568 </li>
+                      <li>E-Mail : shifaproeprtiesdhalahore@gmail.com</li>                        
+                    </ul>
+              </div>     
+              <div class="footer-col">
+                  <h4>Company</h4>
+                  <ul>
+                      <li><a href="Home.html" target="_blank">Home</a></li>
+                      <li><a href="Properties.html"target="_blank">Properties</a></li>
+                      <li><a href="About Us.html"target="_blank">About Us</a></li>
+                      <li><a href="contactus.html"target="_blank">Contact</a></li>
+                      <li><a href="Signin.html"target="_blank">Sign In</a></li>
+                      <li><a href="termsandconditions.html"target="_blank">Terms and Conditions</a></li>
+                      <li><a href="privacypolicy.html"target="_blank">Privacy Policy</a></li>
+                  </ul>
+              </div>
+              
+              <div class="footer-col">
+                  <h4>Follow US</h4>
+                      <ul>
+                          <li><a href="https://www.facebook.com/Shifaproperties?mibextid=ZbWKwL" target="_blank">Facebook</a></li>
+                          <li><a href="">Twitter</a></li>
+                          <li><a href="https://www.instagram.com/dhalahoreshifa?igsh=dnJ5cWE1eWptazl3" target="_blank">Instagram</a></li>
+                          <li><a href="https://www.linkedin.com/in/shifa-properties-94356a27a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">LinkedIn</a></li>
+                      </ul>    
+              </div>
+      </div>
+  </div>
+  </footer>
+
+    </body>
+</html>
