@@ -85,7 +85,7 @@ int main() {
     getline(cin, passportID);
 
     // List of countries
-    vector<string> countries = {"Paris", "London", "Tokyo"};
+    vector<string> countries = {"Naran", "Sawat", "Kashmir"};
 
     string selectedCountry;
     int days, ticketType, packageType, familyMembers;
@@ -154,9 +154,9 @@ int main() {
     double totalCost = 0;
     for (int i = 0; i < familyMembers; ++i) {
         cout << "Select ticket type for family member " << i + 1 << ":" << endl;
-        cout << "1. Business Class ($500 per day + $1000 fixed)" << endl;
-        cout << "2. Economy Class ($300 per day + $500 fixed)" << endl;
-        cout << "3. Class A ($700 per day + $1500 fixed)" << endl;
+        cout << "1. Business Class (RS 500 per day + RS 1000 fixed)" << endl;
+        cout << "2. Economy Class (RS 300 per day + RS 500 fixed)" << endl;
+        cout << "3. Class A (RS 700 per day + RS 1500 fixed)" << endl;
         cin >> ticketType;
 
         unique_ptr<TravelPackage> package;
@@ -180,10 +180,10 @@ int main() {
     }
 
     cout << "Additional facilities:" << endl;
-    cout << "1. VIP rooms ($200)" << endl;
-    cout << "2. Regular rooms ($100)" << endl;
-    cout << "3. Meals ($50 per day per person)" << endl;
-    cout << "4. Guide ($100 per day)" << endl;
+    cout << "1. VIP rooms (RS 200)" << endl;
+    cout << "2. Regular rooms (RS 100)" << endl;
+    cout << "3. Meals (RS 50 per day per person)" << endl;
+    cout << "4. Guide (RS 100 per day)" << endl;
 
     vector<string> facilities;
     do {
@@ -221,16 +221,16 @@ int main() {
 if (packageType == FAMILY) {
         totalCost *= familyMembers; // Calculate total cost for all family members
 
-        cout << "\nTotal Amount before Discount: $" << fixed << setprecision(2) << totalCost << endl;
+        cout << "\nTotal Amount before Discount: RS" << fixed << setprecision(2) << totalCost << endl;
 
         // Apply discount for family package
         double discountedAmount = totalCost * 0.10;
         double totalBillAfterDiscount = totalCost - discountedAmount;
 
-        cout << "Discounted Amount: $" << fixed << setprecision(2) << discountedAmount << endl;
+        cout << "Discounted Amount: RS" << fixed << setprecision(2) << discountedAmount << endl;
         cout << "Total Bill after Discount: $" << fixed << setprecision(2) << totalBillAfterDiscount << endl;
     } else {
-        cout << "\nTotal Cost: $" << fixed << setprecision(2) << totalCost << endl;
+        cout << "\nTotal Cost: RS" << fixed << setprecision(2) << totalCost << endl;
     }
 
     return 0;
