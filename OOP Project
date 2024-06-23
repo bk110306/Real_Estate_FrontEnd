@@ -3,6 +3,7 @@
 #include <vector>
 #include <iomanip>
 #include <memory>
+#include <algorithm>
 
 using namespace std;
 
@@ -65,170 +66,240 @@ public:
     }
 };
 
-enum PackageType { SOLO, FAMILY };
+enum PackageType { SOLO = 2, FAMILY = 1 };
 
-int main() {
-    string travelerName;
-    int travelerAge;
-    string passportID;
+// Traveler class to manage traveler's details
+class Traveler {
+private:
+    string name;
+    int age;
+    string cnic;
 
-    cout << "Welcome to the Professional Travel Expense Tracker System" << endl;
+public:
+    void inputTravelerDetails() {
+        cout << "Enter traveler's name: ";
+        getline(cin, name);
 
-    cout << "Enter traveler's name: ";
-    getline(cin, travelerName); // Allowing spaces in name
+        cout << "Enter traveler's age: ";
+        cin >> age;
 
-    cout << "Enter traveler's age: ";
-    cin >> travelerAge;
-
-    cin.ignore(); // Ignore newline character
-    cout << "Enter traveler's passport ID: ";
-    getline(cin, passportID);
-
-    // List of countries
-    vector<string> countries = {"Naran", "Sawat", "Kashmir"};
-
-    string selectedCountry;
-    int days, ticketType, packageType, familyMembers;
-
-    // Display available countries
-    cout << "Available Countries:" << endl;
-    int idx = 1;
-    for (const auto& country : countries) {
-        cout << idx++ << ". " << country << endl;
+        cin.ignore(); // Ignore newline character
+        cout << "Enter traveler's CNIC Number: ";
+        getline(cin, cnic);
     }
 
-    // User selects the country
-    int countryChoice;
-    cout << "Select a country: ";
-    cin >> countryChoice;
+    void displayTravelerDetails() const {
+        cout << "Traveler's Name: " << name << endl;
+        cout << "Traveler's Age: " << age << endl;
+        cout << "Traveler's CNIC: " << cnic << endl;
+    }
+};
 
-    // Validate the user input
-    if (countryChoice < 1 || countryChoice > static_cast<int>(countries.size())) {
-        cout << "Invalid choice!" << endl;
-        return 1;
+// InputHandler class to manage input for selecting cities, packages, etc.
+class InputHandler {
+private:
+    vector<string> cities = {"sawat", "kashmir", "naran", "kagan"};
+
+public:
+    string selectCity() {
+        int selectedCityIndex = -1;
+
+        cout << "Available Cities:" << endl;
+        for (size_t i = 0; i < cities.size(); ++i) {
+            cout << i + 1 << ". " << cities[i] << endl;
+        }
+
+        cout << "Enter the number corresponding to the city: ";
+        cin >> selectedCityIndex;
+
+        if (selectedCityIndex < 1 || selectedCityIndex > static_cast<int>(cities.size())) {
+            cout << "Invalid city selection!" << endl;
+            exit(1);
+        }
+
+        // Clear newline character left in the input buffer
+        cin.ignore();
+
+        return cities[selectedCityIndex - 1];
     }
 
-    selectedCountry = countries[countryChoice - 1];
-    
-    cout << "Select package type:" << endl;
-    cout << "1. Family Package (10% discount)" << endl;
-    cout << "2. Solo Package (no discount)" << endl;
-    cout << "Enter your choice: ";
-    cin >> packageType;
+    int selectPackageType() {
+        int packageType;
 
-    if (packageType == FAMILY) {
-        cout << "Enter number of family members: ";
-        cin >> familyMembers;
-    } else {
-        familyMembers = 1; // Default to 1 for solo package
+        cout << "Select package type:" << endl;
+        cout << "1. Family Package (10% discount)" << endl;
+        cout << "2. Solo Package (no discount)" << endl;
+        cout << "Enter your choice: ";
+        cin >> packageType;
+
+        if (packageType != FAMILY && packageType != SOLO) {
+            cout << "Invalid package type!" << endl;
+            exit(1);
+        }
+
+        return packageType;
     }
 
-    cout << "Select package duration:" << endl;
-    cout << "1. 5 days" << endl;
-    cout << "2. 10 days" << endl;
-    cout << "3. 20 days" << endl;
-    cout << "4. 30 days" << endl;
+    int selectPackageDuration() {
+        int durationChoice;
 
-    int durationChoice;
-    cout << "Enter your choice: ";
-    cin >> durationChoice;
+        cout << "Select package duration:" << endl;
+        cout << "1. 5 days" << endl;
+        cout << "2. 10 days" << endl;
+        cout << "3. 20 days" << endl;
+        cout << "4. 30 days" << endl;
 
-    switch (durationChoice) {
-        case 1:
-            days = 5;
-            break;
-        case 2:
-            days = 10;
-            break;
-        case 3:
-            days = 20;
-            break;
-        case 4:
-            days = 30;
-            break;
-        default:
-            cout << "Invalid choice!" << endl;
-            return 1;
+        cout << "Enter your choice: ";
+        cin >> durationChoice;
+
+        int days;
+        switch (durationChoice) {
+            case 1:
+                days = 5;
+                break;
+            case 2:
+                days = 10;
+                break;
+            case 3:
+                days = 20;
+                break;
+            case 4:
+                days = 30;
+                break;
+            default:
+                cout << "Invalid choice!" << endl;
+                exit(1);
+        }
+
+        return days;
     }
 
-    double totalCost = 0;
-    for (int i = 0; i < familyMembers; ++i) {
-        cout << "Select ticket type for family member " << i + 1 << ":" << endl;
+    int selectFamilyMembers(int packageType) {
+        int familyMembers = 1; // Default to 1 for solo package
+        if (packageType == FAMILY) {
+            cout << "Enter number of family members: ";
+            cin >> familyMembers;
+        }
+        return familyMembers;
+    }
+
+    int selectTicketType(int familyMemberIndex) {
+        int ticketType;
+
+        cout << "Select ticket type for family member " << familyMemberIndex + 1 << ":" << endl;
         cout << "1. Business Class (RS 500 per day + RS 1000 fixed)" << endl;
         cout << "2. Economy Class (RS 300 per day + RS 500 fixed)" << endl;
         cout << "3. Class A (RS 700 per day + RS 1500 fixed)" << endl;
         cin >> ticketType;
 
+        if (ticketType < 1 || ticketType > 3) {
+            cout << "Invalid ticket type!" << endl;
+            exit(1);
+        }
+
+        return ticketType;
+    }
+
+    vector<string> selectAdditionalFacilities(int days, int familyMembers, double& totalCost) {
+        vector<string> facilities;
+        int choice;
+
+        do {
+            cout << "Additional facilities:" << endl;
+            cout << "1. VIP rooms (RS 200)" << endl;
+            cout << "2. Regular rooms (RS 100)" << endl;
+            cout << "3. Meals (RS 50 per day per person)" << endl;
+            cout << "4. Guide (RS 100 per day)" << endl;
+            cout << "Enter choice (0 to finish): ";
+            cin >> choice;
+
+            switch (choice) {
+                case 0:
+                    break;
+                case 1:
+                    facilities.push_back("VIP rooms");
+                    totalCost += 200;
+                    break;
+                case 2:
+                    facilities.push_back("Regular rooms");
+                    totalCost += 100;
+                    break;
+                case 3:
+                    facilities.push_back("Meals");
+                    totalCost += 50 * days * familyMembers;
+                    break;
+                case 4:
+                    facilities.push_back("Guide");
+                    totalCost += 100 * days;
+                    break;
+                default:
+                    cout << "Invalid choice!" << endl;
+            }
+        } while (choice != 0);
+
+        return facilities;
+    }
+};
+
+int main() {
+    Traveler traveler;
+    InputHandler inputHandler;
+
+    cout << "Welcome to the Professional Travel Expense Tracker System" << endl;
+
+    traveler.inputTravelerDetails();
+
+    string selectedCity = inputHandler.selectCity();
+    int packageType = inputHandler.selectPackageType();
+    int days = inputHandler.selectPackageDuration();
+    int familyMembers = inputHandler.selectFamilyMembers(packageType);
+
+    double totalCost = 0;
+    vector<unique_ptr<TravelPackage>> packages;
+
+    for (int i = 0; i < familyMembers; ++i) {
+        int ticketType = inputHandler.selectTicketType(i);
+
         unique_ptr<TravelPackage> package;
         switch (ticketType) {
             case 1:
-                package = make_unique<BusinessClassPackage>(selectedCountry, days);
+                package = make_unique<BusinessClassPackage>(selectedCity, days);
                 break;
             case 2:
-                package = make_unique<EconomyClassPackage>(selectedCountry, days);
+                package = make_unique<EconomyClassPackage>(selectedCity, days);
                 break;
             case 3:
-                package = make_unique<ClassAPackage>(selectedCountry, days);
+                package = make_unique<ClassAPackage>(selectedCity, days);
                 break;
-            default:
-                cout << "Invalid choice!" << endl;
-                return 1;
         }
 
         package->calculateCost();
-        totalCost += package->getCost();
+        packages.push_back(move(package));
     }
 
-    cout << "Additional facilities:" << endl;
-    cout << "1. VIP rooms (RS 200)" << endl;
-    cout << "2. Regular rooms (RS 100)" << endl;
-    cout << "3. Meals (RS 50 per day per person)" << endl;
-    cout << "4. Guide (RS 100 per day)" << endl;
+    vector<string> facilities = inputHandler.selectAdditionalFacilities(days, familyMembers, totalCost);
 
-    vector<string> facilities;
-    do {
-        int choice;
-        cout << "Enter choice (0 to finish): ";
-        cin >> choice;
-        if (choice == 0)
-            break;
-        switch (choice) {
-            case 1:
-                facilities.push_back("VIP rooms");
-                totalCost += 200; // Additional cost for VIP rooms
-                break;
-            case 2:
-                facilities.push_back("Regular rooms");
-                totalCost += 100; // Additional cost for regular rooms
-                break;
-            case 3:
-                totalCost += 50 * days * familyMembers; // Additional cost for meals
-                facilities.push_back("Meals");
-                break;
-            case 4:
-                totalCost += 100 * days; // Additional cost for guide
-                facilities.push_back("Guide");
-                break;
-            default:
-                cout << "Invalid choice!" << endl;
-        }
-    } while (true);
+    cout << "\nDetailed Breakdown:" << endl;
+    double packageTotal = 0;
+    for (const auto& package : packages) {
+        package->display();
+        packageTotal += package->getCost();
+    }
 
     cout << "\nAdditional Facilities:" << endl;
     for (const auto& facility : facilities) {
         cout << "- " << facility << endl;
     }
-if (packageType == FAMILY) {
-        totalCost *= familyMembers; // Calculate total cost for all family members
 
-        cout << "\nTotal Amount before Discount: RS" << fixed << setprecision(2) << totalCost << endl;
+    totalCost += packageTotal;
 
-        // Apply discount for family package
-        double discountedAmount = totalCost * 0.10;
+    if (packageType == FAMILY) {
+        double discountedAmount = packageTotal * 0.10;
         double totalBillAfterDiscount = totalCost - discountedAmount;
 
+        cout << "\nTotal Amount before Discount: RS" << fixed << setprecision(2) << totalCost << endl;
         cout << "Discounted Amount: RS" << fixed << setprecision(2) << discountedAmount << endl;
-        cout << "Total Bill after Discount: $" << fixed << setprecision(2) << totalBillAfterDiscount << endl;
+        cout << "Total Bill after Discount: RS" << fixed << setprecision(2) << totalBillAfterDiscount << endl;
     } else {
         cout << "\nTotal Cost: RS" << fixed << setprecision(2) << totalCost << endl;
     }
